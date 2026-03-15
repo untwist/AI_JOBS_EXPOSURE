@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Exposure by Geography – Felten et al. AIGE</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e8;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #map { width: 100%; height: 100%; }
+    #sidebar {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      width: 260px;
+      background: rgba(18, 18, 26, 0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 14px 16px;
+      z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    #sidebar h1 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    #sidebar p {
+      font-size: 11px;
+      color: #888894;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    #sidebar a { color: #888894; }
+    #sidebar .legend {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    #sidebar .legend-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #888894; margin-bottom: 6px; }
+    #sidebar .legend-bar {
+      height: 10px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      background: linear-gradient(to right, #1a472a, #2d7d4a, #6b9e3e, #c9a227, #8b2e2e);
+    }
+    #sidebar .legend-labels { font-size: 10px; color: #888894; display: flex; justify-content: space-between; }
+    #back { display: inline-block; margin-top: 12px; font-size: 12px; color: #888894; text-decoration: none; }
+    #back:hover { color: #e0e0e8; }
+    .leaflet-popup-content-wrapper { background: #12121a; color: #e0e0e8; border-radius: 6px; }
+    .leaflet-popup-tip { background: #12121a; }
+    .leaflet-control-attribution { font-size: 10px; }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h1>AI exposure by geography</h1>
+    <p>County-level AIGE (Felten et al.). Color: low (green) → high (red). Data: <a href="https://github.com/AIOE-Data/AIOE" target="_blank" rel="noopener">AIOE-Data/AIOE</a> Appendix C.</p>
+    <div class="legend">
+      <div class="legend-title">AIGE (0–100)</div>
+      <div class="legend-bar"></div>
+      <div class="legend-labels"><span>Low</span><span>High</span></div>
+    </div>
+    <a id="back" href="index.html">← Back to job exposure treemap</a>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    const GEOJSON_URL = "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json";
+
+    const map = L.map("map", { zoomControl: false }).setView([39, -98], 4);
+    L.control.zoom({ position: "topright" }).addTo(map);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution: "&copy; OSM, CARTO",
+      maxZoom: 19
+    }).addTo(map);
+
+    function colorByValue(v) {
+      if (v == null) return "#555";
+      const t = Math.max(0, Math.min(100, v)) / 100;
+      const r = Math.round(26 + t * 229);
+      const g = Math.round(71 + (1 - t) * 184);
+      const b = Math.round(42 + (1 - t) * 113);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    }
+
+    Promise.all([
+      fetch("aige_by_county.json").then(r => r.json()),
+      fetch(GEOJSON_URL).then(r => r.json())
+    ]).then(([aige, geojson]) => {
+      const layer = L.geoJSON(geojson, {
+        style: f => {
+          const fips = f.id || (f.properties && (f.properties.STATE + f.properties.COUNTY));
+          const v = aige[fips];
+          return {
+            fillColor: colorByValue(v),
+            weight: 0.6,
+            color: "rgba(255,255,255,0.2)",
+            fillOpacity: 0.75
+          };
+        },
+        onEachFeature: (feature, layer) => {
+          const fips = feature.id || (feature.properties && (feature.properties.STATE + feature.properties.COUNTY));
+          const v = aige[fips];
+          const name = feature.properties && feature.properties.NAME ? feature.properties.NAME + " County" : "FIPS " + fips;
+          layer.bindPopup("<b>" + name + "</b><br>AIGE: " + (v != null ? v.toFixed(1) : "—"));
+          layer.on({ mouseover: () => layer.setStyle({ weight: 1.5, color: "#fff" }), mouseout: () => layer.setStyle({ weight: 0.6, color: "rgba(255,255,255,0.2)" }) });
+        }
+      }).addTo(map);
+    }).catch(err => {
+      document.getElementById("sidebar").innerHTML += "<p style='color:#c44;margin-top:8px'>Failed to load data: " + err.message + "</p>";
+    });
+  </script>
+</body>
+</html>
