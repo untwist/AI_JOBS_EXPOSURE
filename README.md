@@ -62,6 +62,26 @@ The main visualization is an interactive **treemap** where:
 - **Layout** groups occupations by BLS category
 - **Hover** shows detailed tooltip with pay, jobs, outlook, education, exposure score, and LLM rationale
 
+## Run locally
+
+The static site is in `docs/`. Serve it with Python’s built-in HTTP server:
+
+**From the repo root:**
+
+```bash
+python3 -m http.server 8000 --directory docs
+```
+
+**Or from inside `docs`:**
+
+```bash
+cd docs && python3 -m http.server 8000
+```
+
+Then open **http://localhost:8000** in your browser. No build step or Node.js required.
+
+If port 8000 is already in use, pick another (e.g. `8080`) or stop the process using 8000 first.
+
 ## LLM prompt
 
 [`prompt.md`](prompt.md) packages all the data — aggregate statistics, tier breakdowns, exposure by pay/education, BLS growth projections, and all 342 occupations with their scores and rationales — into a single file (~45K tokens) designed to be pasted into an LLM. This lets you have a data-grounded conversation about AI's impact on the job market without needing to run any code. Regenerate it with `uv run python make_prompt.py`.
@@ -107,10 +127,9 @@ uv run python score.py
 
 # Build website data
 uv run python build_site_data.py
-
-# Serve the site locally
-cd docs && python -m http.server 8000
 ```
+
+To view the treemap in your browser, see **Run locally** above.
 
 ## Pushing to your own GitHub repo
 

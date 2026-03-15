@@ -14,6 +14,8 @@
   --fg2: #888894;
   --sidebar-w: 250px;
   --legend-w: 250px;
+  /* Brightest color from current exposure color scheme (updated by setColorScheme) */
+  --exposure-accent: 240, 230, 255;
 }
 
 body {
@@ -281,6 +283,19 @@ body {
 }
 .view-toggle button:hover:not(.active) {
   background: rgba(255,255,255,0.04);
+}
+.exposure-metric-toggle button[data-metric="anthropic"] {
+  border-color: rgba(var(--exposure-accent), 0.7);
+  color: rgba(var(--exposure-accent), 0.95);
+}
+.exposure-metric-toggle button[data-metric="anthropic"]:hover {
+  border-color: rgba(var(--exposure-accent), 0.9);
+  background: rgba(var(--exposure-accent), 0.08);
+}
+.exposure-metric-toggle button[data-metric="anthropic"].active {
+  background: rgba(var(--exposure-accent), 0.18);
+  border-color: rgba(var(--exposure-accent), 0.95);
+  color: rgb(var(--exposure-accent));
 }
 
 .gradient-legend {
@@ -659,12 +674,18 @@ function exposureColorCSS(score, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+function updateExposureAccentCSS() {
+  const [r, g, b] = exposureColor(10);
+  document.documentElement.style.setProperty("--exposure-accent", `${r}, ${g}, ${b}`);
+}
+
 function setColorScheme(schemeKey) {
   if (!exposureColorSchemes[schemeKey]) return;
   currentColorScheme = schemeKey;
   try { localStorage.setItem("exposureColorScheme", schemeKey); } catch (e) {}
   const sel = document.getElementById("colorSchemeSelect");
   if (sel) sel.value = schemeKey;
+  updateExposureAccentCSS();
   computeStats();
   drawGradientLegend();
   if (currentView === "treemap") { layout(); draw(); } else { layoutColumns(); drawColumns(); }
@@ -1413,6 +1434,7 @@ fetch("data.json")
     }
     const sel = document.getElementById("colorSchemeSelect");
     if (sel) sel.value = currentColorScheme;
+    updateExposureAccentCSS();
     updateLegendText();
     computeStats();
     drawGradientLegend();
