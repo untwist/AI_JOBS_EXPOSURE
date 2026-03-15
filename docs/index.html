@@ -447,9 +447,17 @@
       <h1>AI Exposure of the US Job Market</h1>
     </div>
 
-    <div class="view-toggle">
+    <div class="view-toggle" id="mainViewToggle">
       <button class="active" onclick="setView('treemap')">Treemap</button>
       <button onclick="setView('scatter')">Exposure vs Outlook</button>
+    </div>
+
+    <div class="stat-section" id="columnColorSection" style="display:none;">
+      <h3>Color tiles by</h3>
+      <div class="exposure-metric-toggle view-toggle column-color-toggle">
+        <button class="active" data-column-color="exposure" onclick="setColumnColorBy('exposure')">Exposure</button>
+        <button data-column-color="outlook" onclick="setColumnColorBy('outlook')">Outlook</button>
+      </div>
     </div>
 
     <div class="exposure-metric-toggle view-toggle">
@@ -908,13 +916,28 @@
       }
     }
 
+    let columnColorBy = "exposure"; // "exposure" | "outlook" (for Exposure vs Outlook view only)
+
     function setView(view) {
       currentView = view;
-      document.querySelectorAll(".view-toggle button").forEach(b => b.classList.remove("active"));
-      document.querySelector(`.view-toggle button[onclick="setView('${view}')"]`).classList.add("active");
+      const mainToggle = document.getElementById("mainViewToggle");
+      if (mainToggle) {
+        mainToggle.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+        const btn = mainToggle.querySelector(`button[onclick="setView('${view}')"]`);
+        if (btn) btn.classList.add("active");
+      }
+      const colEl = document.getElementById("columnColorSection");
+      if (colEl) colEl.style.display = view === "scatter" ? "" : "none";
       hovered = null;
       hideTooltip();
       resize();
+    }
+
+    function setColumnColorBy(mode) {
+      columnColorBy = mode;
+      document.querySelectorAll(".column-color-toggle button").forEach(b => b.classList.remove("active"));
+      document.querySelector(`.column-color-toggle button[data-column-color="${mode}"]`).classList.add("active");
+      if (currentView === "scatter") { layoutColumns(); drawColumns(); }
     }
 
     function layout() {
@@ -1209,7 +1232,9 @@
         if (rw <= 0 || rh <= 0) continue;
 
         const fillAlpha = isHovered ? 0.8 : 0.5;
-        ctx.fillStyle = outlookColorCSS(r.outlook, fillAlpha);
+        ctx.fillStyle = columnColorBy === "outlook"
+          ? outlookColorCSS(r.outlook, fillAlpha)
+          : exposureColorCSS(getExposure(r), fillAlpha);
         ctx.fillRect(rx, ry, rw, rh);
 
         if (isHovered) {
