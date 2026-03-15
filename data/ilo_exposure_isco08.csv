@@ -1,0 +1,428 @@
+isco08,exposure_pct,exposure_gradient
+1111,31,Not Exposed
+1112,38,Minimal Exposure
+1113,23,Not Exposed
+1114,37,Minimal Exposure
+1120,38,Minimal Exposure
+1211,37,Minimal Exposure
+1212,36,Minimal Exposure
+1213,36,Not Exposed
+1219,42,Exposed: Gradient 2
+1221,41,Exposed: Gradient 2
+1222,39,Minimal Exposure
+1223,40,Minimal Exposure
+1311,27,Minimal Exposure
+1312,22,Not Exposed
+1321,38,Minimal Exposure
+1322,35,Minimal Exposure
+1323,34,Minimal Exposure
+1324,38,Minimal Exposure
+1330,44,Exposed: Gradient 2
+1341,30,Minimal Exposure
+1342,36,Minimal Exposure
+1343,34,Minimal Exposure
+1344,37,Minimal Exposure
+1345,36,Minimal Exposure
+1346,47,Exposed: Gradient 2
+1349,38,Minimal Exposure
+1411,37,Exposed: Gradient 1
+1412,36,Minimal Exposure
+1420,44,Exposed: Gradient 2
+1431,32,Minimal Exposure
+2111,38,Exposed: Gradient 1
+2112,54,Exposed: Gradient 3
+2113,39,Minimal Exposure
+2114,36,Minimal Exposure
+2120,56,Exposed: Gradient 3
+2131,40,Exposed: Gradient 2
+2132,29,Not Exposed
+2133,38,Minimal Exposure
+2141,37,Minimal Exposure
+2142,30,Not Exposed
+2143,38,Minimal Exposure
+2144,32,Not Exposed
+2145,35,Minimal Exposure
+2146,29,Not Exposed
+2149,30,Not Exposed
+2151,31,Not Exposed
+2152,42,Exposed: Gradient 2
+2153,48,Exposed: Gradient 2
+2161,37,Minimal Exposure
+2162,37,Minimal Exposure
+2163,35,Minimal Exposure
+2164,41,Minimal Exposure
+2165,44,Exposed: Gradient 2
+2166,49,Exposed: Gradient 2
+2211,29,Not Exposed
+2212,27,Not Exposed
+2221,25,Not Exposed
+2222,30,Minimal Exposure
+2230,32,Minimal Exposure
+2240,23,Not Exposed
+2250,14,Not Exposed
+2261,15,Not Exposed
+2262,33,Minimal Exposure
+2263,28,Not Exposed
+2264,28,Minimal Exposure
+2265,41,Minimal Exposure
+2266,24,Not Exposed
+2267,24,Not Exposed
+2269,19,Not Exposed
+2310,37,Minimal Exposure
+2320,35,Minimal Exposure
+2330,30,Not Exposed
+2341,26,Not Exposed
+2342,21,Not Exposed
+2351,39,Exposed: Gradient 1
+2352,28,Not Exposed
+2353,34,Minimal Exposure
+2354,35,Minimal Exposure
+2355,35,Minimal Exposure
+2356,47,Exposed: Gradient 2
+2359,33,Minimal Exposure
+2411,51,Exposed: Gradient 3
+2412,57,Exposed: Gradient 3
+2413,62,Exposed: Gradient 4
+2421,46,Exposed: Gradient 2
+2422,42,Minimal Exposure
+2423,45,Exposed: Gradient 2
+2424,41,Exposed: Gradient 2
+2431,55,Exposed: Gradient 3
+2432,43,Exposed: Gradient 2
+2433,50,Exposed: Gradient 3
+2434,51,Exposed: Gradient 3
+2511,49,Exposed: Gradient 2
+2512,53,Exposed: Gradient 3
+2513,60,Exposed: Gradient 4
+2514,57,Exposed: Gradient 3
+2519,55,Exposed: Gradient 3
+2521,57,Exposed: Gradient 3
+2522,57,Exposed: Gradient 3
+2523,52,Exposed: Gradient 3
+2529,49,Exposed: Gradient 2
+2611,36,Minimal Exposure
+2612,31,Not Exposed
+2619,37,Minimal Exposure
+2621,47,Exposed: Gradient 2
+2622,55,Exposed: Gradient 3
+2631,55,Exposed: Gradient 3
+2632,48,Exposed: Gradient 2
+2633,47,Exposed: Gradient 2
+2634,39,Exposed: Gradient 1
+2635,28,Not Exposed
+2636,17,Not Exposed
+2641,55,Exposed: Gradient 3
+2642,54,Exposed: Gradient 3
+2643,59,Exposed: Gradient 3
+2651,21,Not Exposed
+2652,28,Not Exposed
+2653,19,Not Exposed
+2654,37,Minimal Exposure
+2655,31,Minimal Exposure
+2656,47,Exposed: Gradient 2
+2659,13,Not Exposed
+3111,26,Not Exposed
+3112,28,Not Exposed
+3113,27,Not Exposed
+3114,38,Minimal Exposure
+3115,26,Not Exposed
+3116,32,Not Exposed
+3117,28,Not Exposed
+3118,35,Minimal Exposure
+3119,26,Not Exposed
+3121,29,Not Exposed
+3122,35,Minimal Exposure
+3123,28,Not Exposed
+3131,28,Not Exposed
+3132,27,Not Exposed
+3133,29,Not Exposed
+3134,29,Not Exposed
+3135,31,Minimal Exposure
+3141,38,Exposed: Gradient 1
+3142,26,Not Exposed
+3143,21,Not Exposed
+3151,23,Not Exposed
+3152,29,Not Exposed
+3153,27,Not Exposed
+3154,31,Minimal Exposure
+3155,34,Minimal Exposure
+3211,22,Not Exposed
+3212,31,Minimal Exposure
+3213,30,Minimal Exposure
+3214,18,Not Exposed
+3221,22,Minimal Exposure
+3222,20,Not Exposed
+3230,19,Not Exposed
+3240,14,Not Exposed
+3251,16,Not Exposed
+3252,52,Exposed: Gradient 3
+3253,22,Not Exposed
+3254,24,Not Exposed
+3255,17,Not Exposed
+3256,35,Exposed: Gradient 1
+3257,24,Not Exposed
+3258,22,Not Exposed
+3259,30,Minimal Exposure
+3311,63,Exposed: Gradient 4
+3312,61,Exposed: Gradient 4
+3313,49,Exposed: Gradient 2
+3314,57,Exposed: Gradient 3
+3315,45,Exposed: Gradient 2
+3321,53,Exposed: Gradient 3
+3322,49,Exposed: Gradient 2
+3323,39,Minimal Exposure
+3324,44,Exposed: Gradient 2
+3331,57,Exposed: Gradient 3
+3332,48,Exposed: Gradient 2
+3333,39,Minimal Exposure
+3334,35,Minimal Exposure
+3339,44,Exposed: Gradient 2
+3341,43,Exposed: Gradient 2
+3342,55,Exposed: Gradient 3
+3343,54,Exposed: Gradient 3
+3344,53,Exposed: Gradient 3
+3351,32,Minimal Exposure
+3352,49,Exposed: Gradient 2
+3353,45,Exposed: Gradient 2
+3354,43,Exposed: Gradient 2
+3355,23,Not Exposed
+3359,36,Minimal Exposure
+3411,39,Exposed: Gradient 1
+3412,33,Minimal Exposure
+3413,12,Not Exposed
+3421,23,Not Exposed
+3422,37,Minimal Exposure
+3423,25,Not Exposed
+3431,39,Exposed: Gradient 1
+3432,37,Minimal Exposure
+3433,37,Exposed: Gradient 1
+3434,25,Not Exposed
+3511,43,Exposed: Gradient 2
+3512,47,Exposed: Gradient 2
+3513,43,Exposed: Gradient 2
+3514,53,Exposed: Gradient 3
+3521,35,Minimal Exposure
+3522,45,Minimal Exposure
+4110,60,Exposed: Gradient 4
+4120,58,Exposed: Gradient 3
+4131,65,Exposed: Gradient 4
+4132,70,Exposed: Gradient 4
+4211,58,Exposed: Gradient 3
+4212,45,Exposed: Gradient 2
+4213,48,Exposed: Gradient 2
+4214,43,Exposed: Gradient 2
+4221,56,Exposed: Gradient 3
+4222,58,Exposed: Gradient 3
+4223,54,Exposed: Gradient 3
+4224,51,Exposed: Gradient 3
+4225,57,Exposed: Gradient 3
+4226,57,Exposed: Gradient 3
+4227,55,Exposed: Gradient 3
+4229,42,Exposed: Gradient 2
+4311,64,Exposed: Gradient 4
+4312,64,Exposed: Gradient 4
+4313,61,Exposed: Gradient 4
+4321,37,Minimal Exposure
+4322,44,Exposed: Gradient 2
+4323,49,Exposed: Gradient 3
+4411,46,Exposed: Gradient 2
+4412,41,Exposed: Gradient 2
+4413,51,Exposed: Gradient 3
+4414,58,Exposed: Gradient 3
+4415,37,Exposed: Gradient 1
+4416,61,Exposed: Gradient 4
+4419,63,Exposed: Gradient 4
+5111,22,Not Exposed
+5112,25,Minimal Exposure
+5113,32,Minimal Exposure
+5120,18,Not Exposed
+5131,28,Minimal Exposure
+5132,26,Not Exposed
+5141,17,Not Exposed
+5142,18,Not Exposed
+5151,22,Not Exposed
+5152,20,Not Exposed
+5153,27,Minimal Exposure
+5161,30,Minimal Exposure
+5162,22,Not Exposed
+5163,17,Not Exposed
+5164,14,Not Exposed
+5165,20,Not Exposed
+5169,21,Not Exposed
+5211,35,Exposed: Gradient 1
+5212,22,Not Exposed
+5221,43,Exposed: Gradient 2
+5222,36,Minimal Exposure
+5223,38,Exposed: Gradient 1
+5230,39,Exposed: Gradient 1
+5241,25,Not Exposed
+5242,42,Exposed: Gradient 2
+5243,46,Exposed: Gradient 2
+5244,61,Exposed: Gradient 4
+5245,24,Minimal Exposure
+5246,24,Not Exposed
+5311,19,Not Exposed
+5312,24,Not Exposed
+5321,14,Not Exposed
+5322,25,Minimal Exposure
+5329,15,Not Exposed
+5411,18,Not Exposed
+5412,14,Not Exposed
+5413,14,Not Exposed
+5414,20,Not Exposed
+5419,20,Not Exposed
+6111,18,Not Exposed
+6112,17,Not Exposed
+6113,18,Not Exposed
+6114,17,Not Exposed
+6121,17,Not Exposed
+6122,19,Not Exposed
+6123,22,Not Exposed
+6129,20,Not Exposed
+6130,19,Not Exposed
+6210,12,Not Exposed
+6221,22,Not Exposed
+6222,17,Not Exposed
+6223,18,Not Exposed
+6224,9,Not Exposed
+6310,13,Not Exposed
+6320,13,Not Exposed
+6330,12,Not Exposed
+6340,12,Not Exposed
+7111,14,Not Exposed
+7112,9,Not Exposed
+7113,11,Not Exposed
+7114,10,Not Exposed
+7115,13,Not Exposed
+7119,9,Not Exposed
+7121,13,Not Exposed
+7122,10,Not Exposed
+7123,11,Not Exposed
+7124,13,Not Exposed
+7125,14,Not Exposed
+7126,15,Not Exposed
+7127,21,Not Exposed
+7131,13,Not Exposed
+7132,12,Not Exposed
+7133,9,Not Exposed
+7211,13,Not Exposed
+7212,13,Not Exposed
+7213,21,Not Exposed
+7214,11,Not Exposed
+7215,13,Not Exposed
+7221,17,Not Exposed
+7222,20,Not Exposed
+7223,18,Not Exposed
+7224,17,Not Exposed
+7231,18,Not Exposed
+7232,19,Not Exposed
+7233,17,Not Exposed
+7234,13,Not Exposed
+7311,21,Not Exposed
+7312,14,Not Exposed
+7313,18,Not Exposed
+7314,18,Not Exposed
+7315,19,Not Exposed
+7316,18,Not Exposed
+7317,14,Not Exposed
+7318,13,Not Exposed
+7321,38,Exposed: Gradient 1
+7322,25,Not Exposed
+7323,22,Not Exposed
+7411,19,Not Exposed
+7412,17,Not Exposed
+7413,15,Not Exposed
+7421,25,Not Exposed
+7422,24,Not Exposed
+7511,13,Not Exposed
+7512,17,Not Exposed
+7513,22,Not Exposed
+7514,15,Not Exposed
+7515,31,Minimal Exposure
+7516,14,Not Exposed
+7521,22,Not Exposed
+7522,16,Not Exposed
+7523,22,Not Exposed
+7531,15,Not Exposed
+7532,17,Not Exposed
+7533,12,Not Exposed
+7534,18,Not Exposed
+7535,11,Not Exposed
+7536,17,Not Exposed
+7541,16,Not Exposed
+7542,12,Not Exposed
+7543,31,Minimal Exposure
+7544,13,Not Exposed
+7549,14,Not Exposed
+8111,17,Not Exposed
+8112,21,Not Exposed
+8113,19,Not Exposed
+8114,23,Not Exposed
+8121,26,Not Exposed
+8122,20,Not Exposed
+8131,24,Not Exposed
+8132,27,Not Exposed
+8141,18,Not Exposed
+8142,18,Not Exposed
+8143,18,Not Exposed
+8151,15,Not Exposed
+8152,17,Not Exposed
+8153,15,Not Exposed
+8154,21,Not Exposed
+8155,15,Not Exposed
+8156,16,Not Exposed
+8157,16,Not Exposed
+8159,16,Not Exposed
+8160,15,Not Exposed
+8171,28,Minimal Exposure
+8172,14,Not Exposed
+8181,17,Not Exposed
+8182,19,Not Exposed
+8183,22,Not Exposed
+8211,27,Minimal Exposure
+8212,28,Minimal Exposure
+8219,32,Minimal Exposure
+8311,20,Not Exposed
+8312,18,Not Exposed
+8321,25,Minimal Exposure
+8322,28,Exposed: Gradient 1
+8331,18,Not Exposed
+8332,25,Minimal Exposure
+8341,12,Not Exposed
+8342,13,Not Exposed
+8343,18,Not Exposed
+8344,20,Not Exposed
+8350,14,Not Exposed
+9111,14,Not Exposed
+9112,12,Not Exposed
+9121,14,Not Exposed
+9122,9,Not Exposed
+9123,11,Not Exposed
+9129,10,Not Exposed
+9211,9,Not Exposed
+9212,12,Not Exposed
+9213,11,Not Exposed
+9214,12,Not Exposed
+9215,9,Not Exposed
+9216,11,Not Exposed
+9311,11,Not Exposed
+9312,9,Not Exposed
+9313,9,Not Exposed
+9321,20,Not Exposed
+9329,12,Not Exposed
+9331,21,Not Exposed
+9332,13,Not Exposed
+9333,14,Not Exposed
+9334,20,Not Exposed
+9411,18,Not Exposed
+9412,13,Not Exposed
+9510,18,Not Exposed
+9520,20,Not Exposed
+9611,9,Not Exposed
+9612,18,Not Exposed
+9613,9,Not Exposed
+9621,37,Exposed: Gradient 1
+9622,11,Not Exposed
+9623,38,Exposed: Gradient 1
+9624,9,Not Exposed
+9629,29,Minimal Exposure
