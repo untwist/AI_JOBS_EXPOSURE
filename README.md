@@ -1,14 +1,14 @@
 # AI Exposure of the US Job Market
 
-Analyzing how susceptible every occupation in the US economy is to AI and automation, using data from the Bureau of Labor Statistics [Occupational Outlook Handbook](https://www.bls.gov/ooh/) (OOH).
-
-**Live demo: [karpathy.ai/jobs](https://karpathy.ai/jobs/)**
+An updated version of [karpathy/jobs](https://github.com/karpathy/jobs), analyzing how susceptible every occupation in the US economy is to AI and automation, using data from the Bureau of Labor Statistics [Occupational Outlook Handbook](https://www.bls.gov/ooh/) (OOH).
 
 ![AI Exposure Treemap](jobs.png)
 
+_Screengrab of the interactive treemap (serve locally with `cd docs && python -m http.server 8000`, or use your GitHub Pages URL once deployed). Add or replace `jobs.png` in the repo root with your own screenshot._
+
 ## What's here
 
-This clone uses **pre-included data**: `occupations.csv`, `scores.json`, and `docs/data.json` are already in the repo. Scraping and LLM scoring are **skipped** unless you choose to run the full pipeline (see Setup/Usage below).
+This project uses **pre-included data**: `occupations.csv`, `scores.json`, and `docs/data.json` are already in the repo. Scraping and LLM scoring are **skipped** unless you choose to run the full pipeline (see Setup/Usage below).
 
 The BLS OOH covers **342 occupations** spanning every sector of the US economy, with detailed data on job duties, work environment, education requirements, pay, and employment projections. We scraped all of it, scored each occupation's AI exposure using an LLM, and built an interactive treemap visualization.
 
