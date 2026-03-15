@@ -23,6 +23,9 @@
       --legend-w: 250px;
       /* Brightest color from current exposure color scheme (updated by setColorScheme) */
       --exposure-accent: 240, 230, 255;
+      /* Selected toggle: high contrast so active option is obvious */
+      --toggle-selected-bg: rgba(255, 255, 255, 0.16);
+      --toggle-selected-border: rgba(255, 255, 255, 0.45);
     }
 
     body {
@@ -320,13 +323,20 @@
     }
 
     .view-toggle button.active {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--toggle-selected-bg);
       color: var(--fg);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: var(--toggle-selected-border);
+      box-shadow: 0 0 0 1px var(--toggle-selected-border);
     }
 
     .view-toggle button:hover:not(.active) {
       background: rgba(255, 255, 255, 0.04);
+    }
+
+    .view-toggle button:focus-visible,
+    .view-toggle a:focus-visible {
+      outline: 2px solid var(--toggle-selected-border);
+      outline-offset: 2px;
     }
 
     .view-toggle a {
@@ -349,46 +359,9 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
-    .exposure-metric-toggle button[data-metric="anthropic"] {
-      border-color: rgba(var(--exposure-accent), 0.7);
-      color: rgba(var(--exposure-accent), 0.95);
-    }
-
-    .exposure-metric-toggle button[data-metric="anthropic"]:hover {
-      border-color: rgba(var(--exposure-accent), 0.9);
-      background: rgba(var(--exposure-accent), 0.08);
-    }
-
-    .exposure-metric-toggle button[data-metric="anthropic"].active {
-      background: rgba(var(--exposure-accent), 0.18);
-      border-color: rgba(var(--exposure-accent), 0.95);
-      color: rgb(var(--exposure-accent));
-    }
-
-    .exposure-metric-toggle button[data-metric="aioe"] {
-      border-color: rgba(var(--exposure-accent), 0.7);
-      color: rgba(var(--exposure-accent), 0.95);
-    }
-
-    .exposure-metric-toggle button[data-metric="aioe"]:hover {
-      border-color: rgba(var(--exposure-accent), 0.9);
-      background: rgba(var(--exposure-accent), 0.08);
-    }
-
-    .exposure-metric-toggle button[data-metric="ilo"] {
-      border-color: rgba(180, 140, 220, 0.5);
-    }
-    .exposure-metric-toggle button[data-metric="ilo"]:hover {
-      border-color: rgba(180, 140, 220, 0.8);
-    }
-    .exposure-metric-toggle button[data-metric="ilo"].active {
-      border-color: rgb(180, 140, 220);
-      background: rgba(180, 140, 220, 0.15);
-    }
-    .exposure-metric-toggle button[data-metric="aioe"].active {
-      background: rgba(var(--exposure-accent), 0.18);
-      border-color: rgba(var(--exposure-accent), 0.95);
-      color: rgb(var(--exposure-accent));
+    .view-toggle a:focus-visible {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .gradient-legend {
