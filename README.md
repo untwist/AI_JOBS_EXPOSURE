@@ -4,7 +4,7 @@ An updated version of [karpathy/jobs](https://github.com/karpathy/jobs), analyzi
 
 ![AI Exposure Treemap](jobs.png)
 
-_Screengrab of the interactive treemap (serve locally with `cd docs && python -m http.server 8000`, or use your GitHub Pages URL once deployed). Add or replace `jobs.png` in the repo root with your own screenshot._
+_Screengrab of the interactive treemap._
 
 ## What's here
 
