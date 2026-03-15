@@ -329,6 +329,26 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
+    .view-toggle a {
+      flex: 1;
+      padding: 5px 0;
+      font-size: 10px;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--fg2);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+    }
+
+    .view-toggle a:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     .exposure-metric-toggle button[data-metric="anthropic"] {
       border-color: rgba(var(--exposure-accent), 0.7);
       color: rgba(var(--exposure-accent), 0.95);
@@ -477,8 +497,8 @@
       <button data-metric="ilo" onclick="setExposureMetric('ilo')">ILO (task-based)</button>
     </div>
 
-    <div class="stat-section">
-      <a href="geography.html" style="font-size:12px;color:var(--fg2);">Exposure by geography (county map)</a>
+    <div class="exposure-metric-toggle view-toggle">
+      <a href="geography.html">Exposure by geography (county map)</a>
     </div>
 
     <div class="stat-section">
