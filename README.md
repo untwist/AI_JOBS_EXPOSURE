@@ -19,7 +19,8 @@ The BLS OOH covers **342 occupations** spanning every sector of the US economy, 
 3. **Tabulate** (`make_csv.py`) — Extracts structured fields (pay, education, job count, growth outlook, SOC code) into `occupations.csv`.
 4. **Score** (`score.py`) — Sends each occupation's Markdown description to an LLM (Gemini Flash via OpenRouter) with a scoring rubric. Each occupation gets an AI Exposure score from 0-10 with a rationale. Results saved to `scores.json`.
 5. **Build site data** (`build_site_data.py`) — Merges CSV stats and AI exposure scores into a compact `docs/data.json` for the frontend.
-6. **Website** (`docs/index.html`) — Interactive treemap visualization where area = employment and color = AI exposure (green to red).
+6. **Merge external exposure** (optional) — `merge_anthropic_exposure.py` adds Anthropic observed exposure by SOC; `merge_aioe_exposure.py` adds Felten et al. AIOE from [AIOE-Data/AIOE](https://github.com/AIOE-Data/AIOE). Run after `build_site_data.py`.
+7. **Website** (`docs/index.html`) — Interactive treemap where area = employment and color = AI exposure. You can toggle color by **LLM (0–10)**, **Anthropic (%)**, or **AIOE (Felten)**.
 
 ## Key files
 
@@ -33,7 +34,9 @@ The BLS OOH covers **342 occupations** spanning every sector of the US economy, 
 | `pages/` | Clean Markdown versions of each occupation page |
 | `docs/` | Static website (treemap visualization), deployable to GitHub Pages |
 | `data/job_exposure.csv` | Anthropic observed exposure by SOC (from [Anthropic/EconomicIndex](https://huggingface.co/datasets/Anthropic/EconomicIndex)) |
+| `data/AIOE_DataAppendix.xlsx` | Felten et al. AIOE scores by SOC (from [AIOE-Data/AIOE](https://github.com/AIOE-Data/AIOE)) |
 | `merge_anthropic_exposure.py` | Merges Anthropic exposure into `docs/data.json` by SOC match |
+| `merge_aioe_exposure.py` | Merges AIOE (Felten et al.) into `docs/data.json` by SOC match |
 
 ## AI exposure scoring
 
@@ -58,9 +61,9 @@ Average exposure across all 342 occupations: **5.3/10**.
 
 The main visualization is an interactive **treemap** where:
 - **Area** of each rectangle is proportional to employment (number of jobs)
-- **Color** indicates AI exposure on a green (safe) to red (exposed) scale
+- **Color** indicates AI exposure on a green (safe) to red (exposed) scale. You can choose the source: **LLM (0–10)** (Gemini Flash), **Anthropic (%)** (observed usage), or **AIOE (Felten)** (Felten et al. occupation-level index).
 - **Layout** groups occupations by BLS category
-- **Hover** shows detailed tooltip with pay, jobs, outlook, education, exposure score, and LLM rationale
+- **Hover** shows pay, jobs, outlook, education, and all available exposure metrics (LLM, Anthropic, AIOE) plus LLM rationale
 
 ## Run locally
 
@@ -110,8 +113,9 @@ OPENROUTER_API_KEY=your_key_here
 ## Usage
 
 ```bash
-# Optional: merge Anthropic observed exposure into docs data (run once; uses data/job_exposure.csv)
-uv run python merge_anthropic_exposure.py
+# Optional: merge external exposure into docs data (run after build_site_data.py)
+uv run python merge_anthropic_exposure.py   # uses data/job_exposure.csv
+uv run python merge_aioe_exposure.py       # uses data/AIOE_DataAppendix.xlsx from AIOE-Data/AIOE
 
 # Scrape BLS pages (only needed once, results are cached in html/)
 uv run python scrape.py

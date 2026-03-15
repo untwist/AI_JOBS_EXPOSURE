@@ -297,6 +297,19 @@ body {
   border-color: rgba(var(--exposure-accent), 0.95);
   color: rgb(var(--exposure-accent));
 }
+.exposure-metric-toggle button[data-metric="aioe"] {
+  border-color: rgba(var(--exposure-accent), 0.7);
+  color: rgba(var(--exposure-accent), 0.95);
+}
+.exposure-metric-toggle button[data-metric="aioe"]:hover {
+  border-color: rgba(var(--exposure-accent), 0.9);
+  background: rgba(var(--exposure-accent), 0.08);
+}
+.exposure-metric-toggle button[data-metric="aioe"].active {
+  background: rgba(var(--exposure-accent), 0.18);
+  border-color: rgba(var(--exposure-accent), 0.95);
+  color: rgb(var(--exposure-accent));
+}
 
 .gradient-legend {
   display: flex;
@@ -376,6 +389,7 @@ canvas#canvas {
   <div class="exposure-metric-toggle view-toggle">
     <button class="active" data-metric="llm" onclick="setExposureMetric('llm')">LLM (0–10)</button>
     <button data-metric="anthropic" onclick="setExposureMetric('anthropic')">Anthropic (%)</button>
+    <button data-metric="aioe" onclick="setExposureMetric('aioe')">AIOE (Felten)</button>
   </div>
 
   <div class="stat-section">
@@ -482,13 +496,17 @@ canvas#canvas {
 
 <script>
 
-// ── Exposure metric (LLM 0–10 vs Anthropic observed %) ─────────────────
+// ── Exposure metric (LLM 0–10, Anthropic %, AIOE Felten) ─────────────────
 
-let exposureMetric = "llm"; // "llm" | "anthropic"
+let exposureMetric = "llm"; // "llm" | "anthropic" | "aioe"
 
 function getExposure(d) {
   if (exposureMetric === "anthropic") {
     if (d.observed_exposure_pct != null) return d.observed_exposure_pct / 10;
+    return null;
+  }
+  if (exposureMetric === "aioe") {
+    if (d.aioe_exposure_pct != null) return d.aioe_exposure_pct / 10;
     return null;
   }
   return d.exposure != null ? d.exposure : null;
@@ -503,7 +521,7 @@ function setExposureMetric(metric) {
   if (metric === "llm") {
     if (label) label.textContent = "job-weighted, 0–10 scale";
     if (wagesDesc) wagesDesc.textContent = "annual wages in high-exposure jobs (7+)";
-  } else {
+  } else if (metric === "anthropic" || metric === "aioe") {
     if (label) label.textContent = "job-weighted, 0–100%";
     if (wagesDesc) wagesDesc.textContent = "annual wages in high-exposure jobs (70%+)";
   }
@@ -811,8 +829,10 @@ function updateLegendText() {
   if (!el) return;
   if (exposureMetric === "llm") {
     el.innerHTML = "342 occupations &middot; color = AI exposure<br>Data from <a href=\"https://www.bls.gov/ooh/\">BLS</a> OOH, scored by Gemini Flash<br><a href=\"https://github.com/karpathy/jobs\">GitHub</a>";
-  } else {
+  } else if (exposureMetric === "anthropic") {
     el.innerHTML = "342 occupations &middot; color = AI exposure<br>Data: <a href=\"https://www.bls.gov/ooh/\">BLS</a> OOH + Anthropic observed exposure (<a href=\"https://huggingface.co/datasets/Anthropic/EconomicIndex\" target=\"_blank\" rel=\"noopener\">Anthropic/EconomicIndex</a>)<br><a href=\"https://github.com/karpathy/jobs\">GitHub</a>";
+  } else {
+    el.innerHTML = "342 occupations &middot; color = AI exposure<br>Data: <a href=\"https://www.bls.gov/ooh/\">BLS</a> OOH + Felten et al. AIOE (<a href=\"https://github.com/AIOE-Data/AIOE\" target=\"_blank\" rel=\"noopener\">AIOE-Data/AIOE</a>)<br><a href=\"https://github.com/karpathy/jobs\">GitHub</a>";
   }
 }
 
@@ -914,9 +934,10 @@ function draw() {
 
       if (rh > 34 && rw > 60) {
         const score = getExposure(r);
-        const infoStr = exposureMetric === "anthropic"
-          ? (r.observed_exposure_pct != null ? r.observed_exposure_pct + "%" : "")
-          : (r.exposure != null ? r.exposure + "/10" : "");
+        let infoStr = "";
+        if (exposureMetric === "anthropic") infoStr = r.observed_exposure_pct != null ? r.observed_exposure_pct + "%" : "";
+        else if (exposureMetric === "aioe") infoStr = r.aioe_exposure_pct != null ? r.aioe_exposure_pct + "%" : "";
+        else infoStr = r.exposure != null ? r.exposure + "/10" : "";
         const info = infoStr + (r.jobs ? " \u00b7 " + formatNumber(r.jobs) + " jobs" : "");
         ctx.font = `400 ${Math.max(8, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
         ctx.fillStyle = "rgba(255,255,255,0.5)";
@@ -961,8 +982,9 @@ function showTooltip(d, mx, my) {
   const parts = [];
   if (d.exposure != null) parts.push(`LLM: ${d.exposure}/10`);
   if (d.observed_exposure_pct != null) parts.push(`Anthropic: ${d.observed_exposure_pct}%`);
+  if (d.aioe_exposure_pct != null) parts.push(`AIOE: ${d.aioe_exposure_pct}%`);
   if (score != null) {
-    const barWidth = exposureMetric === "anthropic" ? (d.observed_exposure_pct || 0) : (score * 10);
+    const barWidth = (exposureMetric === "anthropic" ? (d.observed_exposure_pct || 0) : exposureMetric === "aioe" ? (d.aioe_exposure_pct || 0) : (score * 10));
     const color = exposureColorCSS(score, 1);
     tt.querySelector(".tt-exposure").innerHTML =
       `<span style="color:${color};font-weight:600;">${parts.join(" \u00b7 ")}</span>` +
@@ -1023,9 +1045,10 @@ function layoutColumns() {
   for (const d of activeData) {
     const score = getExposure(d);
     if (score == null) continue;
-    const key = exposureMetric === "anthropic"
-      ? Math.min(10, Math.floor((d.observed_exposure_pct != null ? d.observed_exposure_pct : 0) / 10))
-      : d.exposure;
+    let key;
+    if (exposureMetric === "anthropic") key = Math.min(10, Math.floor((d.observed_exposure_pct != null ? d.observed_exposure_pct : 0) / 10));
+    else if (exposureMetric === "aioe") key = Math.min(10, Math.floor((d.aioe_exposure_pct != null ? d.aioe_exposure_pct : 0) / 10));
+    else key = d.exposure;
     if (!byExposure[key]) byExposure[key] = [];
     byExposure[key].push(d);
     totalJobs += d.jobs || 0;
@@ -1087,9 +1110,9 @@ function drawColumns() {
   for (let i = 0; i < meta.scores.length; i++) {
     const colW = meta.colW;
     if (colW > 16) {
-      const scoreForColor = exposureMetric === "anthropic" ? (meta.scores[i] + 0.5) : meta.scores[i];
+      const scoreForColor = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (meta.scores[i] + 0.5) : meta.scores[i];
       ctx.fillStyle = exposureColorCSS(Math.min(10, scoreForColor), 0.7);
-      const label = exposureMetric === "anthropic" ? meta.scores[i] * 10 + "%" : meta.scores[i];
+      const label = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? meta.scores[i] * 10 + "%" : meta.scores[i];
       ctx.fillText(label, hx + colW / 2, meta.pad.top - 5);
     }
     hx += colW + meta.colGap;
@@ -1220,7 +1243,7 @@ function computeStats() {
   // Render
   document.getElementById("statTotalJobs").textContent =
     (totalJobs / 1e6).toFixed(0) + "M";
-  const avgDisplay = exposureMetric === "anthropic" ? (weightedAvg * 10).toFixed(0) + "%" : weightedAvg.toFixed(1);
+  const avgDisplay = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (weightedAvg * 10).toFixed(0) + "%" : weightedAvg.toFixed(1);
   document.getElementById("statAvgExposure").innerHTML =
     `<span style="color:${exposureColorCSS(weightedAvg, 1)}">${avgDisplay}</span>`;
 
@@ -1233,7 +1256,7 @@ function computeStats() {
   }).join("");
   const histLabelsEl = document.getElementById("histLabels");
   if (histLabelsEl) {
-    histLabelsEl.innerHTML = exposureMetric === "anthropic"
+    histLabelsEl.innerHTML = (exposureMetric === "anthropic" || exposureMetric === "aioe")
       ? "<span>0%</span><span>50%</span><span>100%</span>"
       : "<span>0</span><span>5</span><span>10</span>";
   }
@@ -1270,7 +1293,7 @@ function computeStats() {
     }
     const avg = wCount > 0 ? wSum / wCount : 0;
     const pct = avg / 10 * 100;
-    const avgDisplay = exposureMetric === "anthropic" ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
+    const avgDisplay = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
     return `<div class="hbar-row">
       <span class="hbar-label">${band.label}</span>
       <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
@@ -1298,7 +1321,7 @@ function computeStats() {
     }
     const avg = wCount > 0 ? wSum / wCount : 0;
     const pct = avg / 10 * 100;
-    const avgDisplay = exposureMetric === "anthropic" ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
+    const avgDisplay = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
     return `<div class="hbar-row">
       <span class="hbar-label">${grp.label}</span>
       <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
@@ -1322,7 +1345,7 @@ function computeStats() {
   const categoryChartEl = document.getElementById("categoryChart");
   categoryChartEl.innerHTML = categoryAvgs.map(({ cat, avg }) => {
     const pct = avg / 10 * 100;
-    const avgDisplay = exposureMetric === "anthropic" ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
+    const avgDisplay = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
     return `<div class="hbar-row">
       <span class="hbar-label">${categoryDisplayLabel(cat)}</span>
       <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
@@ -1345,7 +1368,7 @@ function computeStats() {
     if (wCount === 0) return "";
     const avg = wSum / wCount;
     const pct = avg / 10 * 100;
-    const avgDisplay = exposureMetric === "anthropic" ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
+    const avgDisplay = (exposureMetric === "anthropic" || exposureMetric === "aioe") ? (avg * 10).toFixed(0) + "%" : avg.toFixed(1);
     return `<div class="hbar-row">
       <span class="hbar-label">${label}</span>
       <div class="hbar-track"><div class="hbar-fill" style="width:${pct}%;background:${exposureColorCSS(avg, 0.8)}"></div></div>
