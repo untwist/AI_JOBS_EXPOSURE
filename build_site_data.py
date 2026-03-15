@@ -2,7 +2,7 @@
 Build a compact JSON for the website by merging CSV stats with AI exposure scores.
 
 Reads occupations.csv (for stats) and scores.json (for AI exposure).
-Writes site/data.json.
+Writes docs/data.json.
 
 Usage:
     uv run python build_site_data.py
@@ -43,11 +43,11 @@ def main():
         })
 
     import os
-    os.makedirs("site", exist_ok=True)
-    with open("site/data.json", "w") as f:
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/data.json", "w") as f:
         json.dump(data, f)
 
-    print(f"Wrote {len(data)} occupations to site/data.json")
+    print(f"Wrote {len(data)} occupations to docs/data.json")
     total_jobs = sum(d["jobs"] for d in data if d["jobs"])
     print(f"Total jobs represented: {total_jobs:,}")
 
