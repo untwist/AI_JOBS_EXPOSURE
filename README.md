@@ -1,5 +1,7 @@
 # AI Exposure of the US Job Market
 
+**Live site:** https://untwist.github.io/AI_JOBS_EXPOSURE/index.html
+
 An updated version of [karpathy/jobs](https://github.com/karpathy/jobs), analyzing how susceptible every occupation in the US economy is to AI and automation, using data from the Bureau of Labor Statistics [Occupational Outlook Handbook](https://www.bls.gov/ooh/) (OOH).
 
 ![AI Exposure Treemap](jobs.png)
